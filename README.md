@@ -63,11 +63,14 @@ developing your own process.
 - Add a new toy when the toy form is submitted
 
   - How I debugged:
+  I tried creating a new toy with valid data. I then opened the browser console and saw that there was a 500 status code Internal Server Error. This let me know that I should look at the server logs to get a better idea of the issue. In the Server logs I saw there was a NameError uninitialized constant in the create action of the Toys controller. The fix was to correct a typo from "Toys.create" to "Toy.create".
 
 - Update the number of likes for a toy
 
   - How I debugged:
+  Upon clicking the like button I saw that the error was an Uncaught (in Promise) SyntaxError: Unexpected end of JSON input. This error indicates that the server needs to return JSON-formatted data. I looked at the update action in the Toys controller and saw that it was not returning the toy that was updated as JSON. Therefore I added the render method and added json as the option to the toy that was being updated. 
 
 - Donate a toy to Goodwill (and delete it from our database)
 
   - How I debugged:
+  Upon clicking the "Donate to GoodWill" button, I received a 404 status code Not Found error. I took a look at the server logs and saw that no route matches DELETE. I then looked to the config/routes.rb file and saw that the destroy action was missing for our DELETE action. Since adding a destroy method would give us full use of our routes I deleted the only option. 
